@@ -1,0 +1,27 @@
+{
+  "presets": [
+    "react",
+    "stage-0",
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current",
+          "uglify": false
+        },
+        "modules": false
+      }
+    ],
+    "@ava/stage-4",
+    "@ava/transform-test-files"
+  ],
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ],
+  "env": {
+    "development": {
+      "sourceMaps": "inline"
+    }
+  }
+}
