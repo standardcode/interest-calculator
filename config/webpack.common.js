@@ -1,33 +1,37 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const helpers = require("./helpers");
+const path = require("path");
 
 const NODE_ENV = process.env.NODE_ENV;
 
+const relative = (dir = "") => path.resolve(__dirname, "../", dir);
+
 module.exports = {
+  context: relative(),
+
   entry: {
-    "app": [
-      helpers.root("app/index.js")
+    app: [
+      "./app/index.js"
     ]
   },
 
   output: {
-    path: helpers.root("dist"),
+    path: relative("dist"),
     publicPath: "/"
   },
 
   resolve: {
     extensions: [".js", ".json", ".css", ".scss", ".html"],
     alias: {
-      "app": "app"
+      app: "app"
     }
   },
 
   module: {
     rules: [
       {
-        test: /\.js|.jsx?$/,
-        include: helpers.root(""),
+        test: /\.js$/,
+        include: relative(),
         exclude: /(node_modules|bower_compontents)/,
         loader: "babel-loader"
       }
@@ -46,7 +50,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: helpers.root("public/index.html"),
+      template: "./public/index.html",
       inject: "body"
     })
   ]

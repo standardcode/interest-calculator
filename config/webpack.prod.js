@@ -1,7 +1,6 @@
 const merge = require("webpack-merge");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const helpers = require("./helpers");
 const commonConfig = require("./webpack.common");
 
 module.exports = merge(commonConfig, {
@@ -12,7 +11,7 @@ module.exports = merge(commonConfig, {
 
   plugins: [
     new CopyWebpackPlugin([{
-      from: helpers.root("public")
+      from: "public"
     }])
   ]
 });
