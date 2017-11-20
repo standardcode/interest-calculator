@@ -2,8 +2,6 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
-const NODE_ENV = process.env.NODE_ENV;
-
 const relative = (dir = "") => path.resolve(__dirname, "../", dir);
 
 module.exports = {
@@ -44,9 +42,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
 
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(NODE_ENV)
-      }
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
 
     new HtmlWebpackPlugin({
