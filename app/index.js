@@ -12,7 +12,9 @@ const initialState = reducer({
     amount: 1000,
     rate: 5,
     period: 90,
-    duration: 4
+    duration: 4,
+    fee: 1,
+    tax: 19
   }
 }, {type: INPUT});
 

@@ -1,10 +1,30 @@
 import S from "sanctuary";
 import * as R from "ramda";
 
-export default ({amount, rate, period, duration}) => {
-  const ratePerPeriod = 1 + S.mult(S.div(rate, 100), S.div(period, 360));
-  const settlements = R.scan(S.mult, amount, S.map(S.K(ratePerPeriod), S.range(0, duration)));
+const step = (rate, feeRate, taxRate) => ({gross: amount}) => {
+  const gross = amount * (1 + rate);
+  const fee = gross * feeRate;
+  const afterFee = gross - fee;
+  const tax = (afterFee - amount) * taxRate;
+  const net = afterFee - tax;
+
   return {
-    settlements: S.fromMaybe([], S.tail(settlements))
+    gross,
+    fee,
+    tax,
+    net
+  };
+};
+
+export default ({amount, rate, period, duration, tax, fee}) => {
+  const rateConvert = S.mult(S.div(period, 360 * 100));
+  const steps = R.scan(step(rateConvert(rate), rateConvert(fee), rateConvert(tax)), {gross: amount}, S.range(0, duration));
+  const settlements = S.fromMaybe([], S.tail(steps));
+  const sum = S.compose(S.sum, S.pluck(S.__, settlements));
+  const keys = ["tax", "fee"];
+  const total = R.zipObj(keys, R.map(sum, keys));
+  return {
+    settlements,
+    total
   };
 };
