@@ -8,10 +8,13 @@ import {handleInput} from "./actions";
 
 const styles = () => ({
   field: {
-    width: "6rem"
+    width: "8rem"
   },
   input: {
     textAlign: "right"
+  },
+  adornment: {
+    whiteSpace: "nowrap"
   }
 });
 
@@ -30,7 +33,7 @@ const Numeric = ({startAdornment, endAdornment, handleInput, classes, ...rest}) 
   />
 );
 
-const Criteria = ({amount, rate, period, duration, fee, tax, ...rest}) => (
+const Criteria = ({amount, interestRate, period, duration, feeRate, taxRate, ...rest}) => (
   <div>
     <Grid container justify="center" spacing={16}>
       {[
@@ -41,9 +44,9 @@ const Criteria = ({amount, rate, period, duration, fee, tax, ...rest}) => (
           startAdornment={<InputAdornment position="start">$</InputAdornment>}
           {...rest}/>,
         <Numeric
-          id="rate"
+          id="interestRate"
           label="Interest rate"
-          value={rate}
+          value={interestRate}
           endAdornment={<InputAdornment position="end">%</InputAdornment>}
           {...rest}/>,
         <Numeric
@@ -59,16 +62,16 @@ const Criteria = ({amount, rate, period, duration, fee, tax, ...rest}) => (
           endAdornment={<InputAdornment position="end">periods</InputAdornment>}
           {...rest}/>,
         <Numeric
-          id="fee"
+          id="feeRate"
           label="Fee"
-          value={fee}
-          endAdornment={<InputAdornment position="end">%</InputAdornment>}
+          value={feeRate}
+          endAdornment={<InputAdornment className={rest.classes.adornment} position="end">% of total</InputAdornment>}
           {...rest}/>,
         <Numeric
-          id="tax"
+          id="taxRate"
           label="Tax"
-          value={tax}
-          endAdornment={<InputAdornment position="end">%</InputAdornment>}
+          value={taxRate}
+          endAdornment={<InputAdornment className={rest.classes.adornment} position="end">% of profit</InputAdornment>}
           {...rest}/>
       ].map((child, i) => (
         <Grid key={i} item>

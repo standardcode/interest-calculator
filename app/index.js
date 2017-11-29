@@ -10,11 +10,11 @@ injectTapEventPlugin();
 const initialState = reducer({
   criteria: {
     amount: 1000,
-    rate: 5,
+    interestRate: 5,
     period: 90,
     duration: 4,
-    fee: 1,
-    tax: 19
+    feeRate: 1,
+    taxRate: 19
   }
 }, {type: INPUT});
 
